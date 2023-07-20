@@ -1,6 +1,6 @@
 import html from "html-literal";
 
-export const Pizza = () => html`
+export default () => html`
   <section id="pizza">
     <table id="pizzas">
       <tr>
@@ -13,5 +13,3 @@ export const Pizza = () => html`
     </table>
   </section>
 `;
-
-export default Pizza;

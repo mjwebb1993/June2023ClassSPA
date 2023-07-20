@@ -1,6 +1,6 @@
 import html from "html-literal";
 
-export const Bio = () => html`
+export default () => html`
   <section id="bio">
     <h2>Vivamus ac justo eu nisi</h2>
     <img
@@ -29,5 +29,3 @@ export const Bio = () => html`
     </p>
   </section>
 `;
-
-export default Bio;
