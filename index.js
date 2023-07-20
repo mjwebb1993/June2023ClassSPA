@@ -1,16 +1,38 @@
-import { Header, Nav, Main, Footer } from "./components";
+import Navigo from "navigo";
+import { capitalize } from "lodash";
+import { Header, Nav, Main, Footer } from "./components/";
+import * as store from "./store";
 
-function render() {
+const router = new Navigo("/");
+
+router
+  .on({
+    "/": () => render(store.Home),
+    ":view": params => {
+      let view = capitalize(params.data.view);
+
+      if (store.hasOwnProperty(view)) {
+        render(store[view]);
+      } else {
+        render(store.Viewnotfound);
+        console.log(`View ${view} not defined`);
+      }
+    }
+  })
+  .resolve();
+
+function render(state = store.Home) {
   document.querySelector("#root").innerHTML = `
-      ${Header()}
-      ${Nav()}
-      ${Main()}
-      ${Footer()}
-    `;
+    ${Header(state)}
+    ${Nav(store.Links)}
+    ${Main(state)}
+    ${Footer()}
+  `;
+
+  router.updatePageLinks();
 }
 
 render();
-
 
 // add menu toggle to bars icon in nav bar
 document.querySelector(".fa-bars").addEventListener("click", () => {
