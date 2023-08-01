@@ -3,7 +3,6 @@ import Navigo from "navigo";
 import { capitalize } from "lodash";
 import axios from "axios";
 import * as store from "./store";
-import axios from "axios";
 
 const router = new Navigo("/");
 
@@ -27,18 +26,23 @@ function afterRender(state) {
 
 router.hooks({
   before: (done, params) => {
-    const view = params && params.data && params.data.view ? capitalize(params.data.view) : "Home";
+    const view =
+      params && params.data && params.data.view
+        ? capitalize(params.data.view)
+        : "Home";
 
     // Add a switch case statement to handle multiple routes
     switch (view) {
       case "Home":
         // New Axios get request utilizing already made environment variable
         axios
-          .get(`https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&q=friendswood&`)
+          .get(
+            `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&q=friendswood&`
+          )
           .then(response => {
             // Convert Kelvin to Fahrenheit since OpenWeatherMap does provide otherwise
             const kelvinToFahrenheit = kelvinTemp =>
-            Math.round((kelvinTemp - 273.15) * (9 / 5) + 32);
+              Math.round((kelvinTemp - 273.15) * (9 / 5) + 32);
             store.Home.weather = {
               city: response.data.name,
               temp: kelvinToFahrenheit(response.data.main.temp),
@@ -47,30 +51,33 @@ router.hooks({
             };
             done();
           })
-          .catch((error) => {
+          .catch(error => {
             console.log("It puked", error);
             done();
           });
-          break;
-        case "Pizza":
-          axios
-            .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
-            .then(response => {
-              // Storing retrieved data in state
-              store.Pizza.pizzas = response.data;
-              done();
-            })
-            .catch((error) => {
-              console.log("It puked", error);
-              done();
-            });
-            break;
-        default :
-          done();
+        break;
+      case "Pizza":
+        axios
+          .get(`${process.env.PIZZA_PLACE_API_URL}/pizzas`)
+          .then(response => {
+            // Storing retrieved data in state
+            store.Pizza.pizzas = response.data;
+            done();
+          })
+          .catch(error => {
+            console.log("It puked", error);
+            done();
+          });
+        break;
+      default:
+        done();
     }
   },
-  already: (params) => {
-    const view = params && params.data && params.data.view ? capitalize(params.data.view) : "Home";
+  already: params => {
+    const view =
+      params && params.data && params.data.view
+        ? capitalize(params.data.view)
+        : "Home";
 
     render(store[view]);
   }
