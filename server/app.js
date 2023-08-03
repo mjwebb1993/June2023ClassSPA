@@ -1,11 +1,28 @@
 // 'Import' the Express module instead of http
 import express from "express";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
+import pizzas from "./routers/pizzas.js";
+
 // Initialize the Express application
 const app = express();
 
 // Load environment variables from .env file
 dotenv.config();
+
+mongoose.connect(process.env.MONGODB, {
+  // Configuration options to remove deprecation warnings, just include them to remove clutter
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
+
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "Connection Error:"));
+db.once(
+  "open",
+  console.log.bind(console, "Successfully opened connection to Mongo!")
+);
 
 // get the PORT from the environment variables, OR use 4040 as default
 const PORT = process.env.PORT || 4040;
@@ -42,6 +59,7 @@ app.get("/status", (request, response) => {
   response.json({ message: "Service healthy" });
 });
 
+// Handle the request with HTTP GET method from http://localhost:4040/weather/mytown?cloudy=partly&rainy=true&lowtemp=60
 app.get("/weather/:city", (request, response) => {
   // Express adds a "params" Object to requests that has an matches parameter created using the colon syntax
   const city = request.params.city;
@@ -59,7 +77,7 @@ app.get("/weather/:city", (request, response) => {
   if ("lowtemp" in request.query) {
     lowTemp = Number(request.query.lowtemp);
   }
-  // Teranery
+  // Ternary version
   // const cloudy = "cloudy" in request.query ? request.query.cloudy : "clear";
   // const rainy =
   //   "rainy" in request.query && request.query.rainy === "true" ? true : false;
@@ -85,6 +103,14 @@ app.get("/weather/:city", (request, response) => {
   });
 });
 
+/*
+  Handle the request with HTTP GET method from http://localhost:4040/add
+  Request Body:
+    {
+      "numberOne": 4,
+      "numberTwo": 3,
+    }
+*/
 app.post("/add", (request, response) => {
   const num1 = request.body.numberOne;
   const num2 = request.body.numberTwo;
@@ -93,6 +119,8 @@ app.post("/add", (request, response) => {
   };
   response.json(responseBody);
 });
+
+app.use("/pizzas", pizzas);
 
 // Tell the Express app to start listening
 // Let the humans know I am running and listening on 4040
