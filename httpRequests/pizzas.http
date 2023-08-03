@@ -1,0 +1,21 @@
+/*
+	VS Code Extension
+	https://httpyac.github.io/guide/
+*/
+
+# @name Get all pizzas
+{{PIZZA_PLACE_API_URL}}/pizzas
+
+###
+
+# @name Create a pizza
+POST {{PIZZA_PLACE_API_URL}}/pizzas
+Content-Type: application/json
+
+{
+	"customer": "Matt T",
+	"crust": "thin",
+	"cheese": "real",
+	"sauce": "marinara",
+	"toppings": ["pepperoni", "ham"]
+}
