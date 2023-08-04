@@ -3,12 +3,25 @@
 	https://httpyac.github.io/guide/
 */
 
-# @name Get all pizzas
-{{PIZZA_PLACE_API_URL}}/pizzas
+# @name getPizzas
+# @title Get all pizzas
+GET {{PIZZA_PLACE_API_URL}}/pizzas
 
 ###
 
-# @name Create a pizza
+/*
+@pizzaId=64cc01a20b3b4aa9f7845df1
+*/
+
+# @name getPizzaById
+# @title Get pizza by ID
+# @ref getPizzas
+GET {{PIZZA_PLACE_API_URL}}/pizzas/{{getPizzas[0]._id}}
+
+###
+
+# @name createPizza
+# @title Create a pizza
 POST {{PIZZA_PLACE_API_URL}}/pizzas
 Content-Type: application/json
 
