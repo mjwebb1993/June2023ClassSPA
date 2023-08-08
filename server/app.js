@@ -28,7 +28,9 @@ db.once(
 const PORT = process.env.PORT || 4040;
 
 const logging = (request, response, next) => {
-  console.log(`${request.method} ${request.url} ${Date.now()}`);
+  console.log(
+    `${request.method} ${request.url} ${new Date().toLocaleString("en-US")}`
+  );
   next();
 };
 
