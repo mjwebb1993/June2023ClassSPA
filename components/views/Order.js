@@ -21,7 +21,6 @@ export default () => html`
           name="cheese"
           id="cheese"
           placeholder="Enter Cheese"
-          required
         />
       </div>
       <div>
@@ -81,7 +80,7 @@ export default () => html`
         type="hidden"
         name="customer"
         id="customer"
-        value="Anonymous Customer"
+        value="Luke Skywalker"
       />
       <input type="submit" name="submit" value="Submit Pizza" />
     </form>
