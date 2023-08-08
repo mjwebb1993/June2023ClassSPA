@@ -43,6 +43,7 @@ export default () => html`
           value="Chicken"
         />
         <label for="top1">chicken</label>
+        <br />
         <input
           type="checkbox"
           id="id_of_checkbox2"
@@ -51,6 +52,7 @@ export default () => html`
           value="onion"
         />
         <label for="top2">onion</label>
+        <br />
         <input
           type="checkbox"
           id="id_of_checkbox3"
@@ -59,6 +61,7 @@ export default () => html`
           value="spinach"
         />
         <label for="top3">spinach</label>
+        <br />
         <input
           type="checkbox"
           id="id_of_checkbox4"
@@ -67,6 +70,7 @@ export default () => html`
           value="Extra cheese"
         />
         <label for="top4">extra cheese</label>
+        <br />
         <input
           type="checkbox"
           id="id_of_checkbox5"
